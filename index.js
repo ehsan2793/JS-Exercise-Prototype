@@ -39,10 +39,24 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-  
+function Person(name , age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
-
+Person.prototype.eat = function (someFood) {
+  if(this.stomach.length < 10 ) {
+    this.stomach.push(someFood);
+  }
+}
+Person.prototype.poop = function () {
+  if(this.stomach.length === 10) {
+    this.stomach = [];
+  }
+}
+Person.prototype.toString = function () {
+  return `${this.name}, ${this.age}`;
+}
 
 
 
@@ -63,11 +77,26 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
 }
-
-
+Car.prototype.fill = function(gallons) {
+  this.tank = this.tank + gallons
+}
+Car.prototype.drive = function(distance){
+  const miles = this.tank * this.milesPerGall;
+  if (distance <= miles) {
+    this.odometer = this.odometer + distance;
+    this.tank =this.tank - (dist/this.milesPerGallon)
+  }else {
+    this.odometer = this.odometer+ miles
+    this.tank = 0;
+    return `i ran out of fule at ${this.odometer} miles`
+  }
+}
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
@@ -75,18 +104,22 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
- 
+function Baby(name,age,favoriteToy) {
+ Person.call (this,name,age)
+ this.favoriteToy = favoriteToy
 }
-
+Baby.prototype = Object.create(Person.prototype)
+Baby.prototype.play = function () { 
+  return `palying with ${this.favoriteToy}`
+}
 
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window Binding - is viewed as error  and is when noe of the rules apply and will give us the global object or undefind in strict mode 
+  2. implicit binding - when the function is invoked look to the left side of the dot  and "this" refers to that 
+  3. explicit binding -  assign "this" explicitly  using  using .bind , .call , . apply 
+  4. new bidning - when the function is created  its invoked as constructor function and "this" will point to the new object that is created 
 */
 
 
